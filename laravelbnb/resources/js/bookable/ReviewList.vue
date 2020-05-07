@@ -2,12 +2,22 @@
     <div style="padding: 1.25rem">
         <h6 class="text-uppercase text-secondary font-weight-bolder pt-4">Review List</h6>
 
+        <star-rating :rating="4.0"></star-rating>
+        <star-rating :rating="4.4"></star-rating>
+        <star-rating :rating="4.5"></star-rating>
+        <star-rating :rating="0.9"></star-rating>
+        <star-rating :rating="3.2"></star-rating>
+
+
         <div v-if="loading">Loading...</div>
         <div v-else>
             <div class="border-bottom d-none d-md-block" v-for="(review, index) in reviews" :key="index">
                 <div class="row pt-4">
                     <div class="col-md-6">Luc Guimbertaud</div>
-                    <div class="col-md-6 d-flex justify-content-end">{{ review.rating }}</div>
+                    <div class="col-md-6 d-flex justify-content-end">
+                        {{ review.rating }}
+                        <star-rating :rating="review.rating"></star-rating>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12">{{ review.created_at | fromNow }}</div>
