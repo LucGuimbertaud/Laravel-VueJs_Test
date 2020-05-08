@@ -9,7 +9,7 @@
 <script>
 export default {
     props: {
-        rating: Number
+        rating: null
     },
 
     computed: {
