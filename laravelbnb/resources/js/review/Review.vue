@@ -56,12 +56,17 @@
                                 rows="10"
                                 class="form-control"
                                 v-model="review.content"
+                                :class="[
+                                    { 'is-invalid': errorFor('content') }
+                                ]"
                             ></textarea>
+                            <v-errors :errors="errorFor('content')"></v-errors>
                         </div>
+
                         <button
                             class="btn btn-lg btn-primary btn-block"
                             @click.prevent="submit"
-                            :disabled="loading"
+                            :disabled="sending"
                         >
                             Submit
                         </button>
@@ -87,7 +92,8 @@ export default {
             loading: false,
             booking: null,
             error: false,
-            errors: null
+            errors: null,
+            sending: false
         };
     },
 
@@ -149,16 +155,17 @@ export default {
     methods: {
         //3. Store the reviews
         submit() {
+
             this.errors = null;
-            this.loading = true;
+            this.sending = true;
             axios
                 .post(`/api/reviews`, this.review)
                 .then(response => console.log(response))
                 .catch(err => {
-                    if(is422(err)){
+                    if (is422(err)) {
                         const errors = err.response.data.errors;
 
-                        if(errors["content"] && 1 === _.size(errors)) {
+                        if (errors["content"] && 1 === _.size(errors)) {
                             this.erros = errors;
                             return;
                         }
@@ -166,8 +173,16 @@ export default {
 
                     this.error = true;
                 })
-                .then(() => (this.loading = false));
+                .then(() => (this.sending = false));
+        },
+
+        errorFor(field) {
+            return null !== this.errors && this.errors[field]
+                ? this.errors[field]
+                : null;
         }
     }
 };
 </script>
+
+
