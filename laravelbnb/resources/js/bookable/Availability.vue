@@ -54,7 +54,7 @@
 <script>
 export default {
     props: {
-        bookableId: String
+        bookableId: null
     },
 
     data(){
