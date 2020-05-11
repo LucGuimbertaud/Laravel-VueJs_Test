@@ -46,10 +46,11 @@ export default {
             .get(`/api/reviews/${this.$route.params.id}`)
             .then(response => this.existingReview = response.data.data)
             .catch(err => {
-
+                //
             })
             .then(() => (this.loading = false));
         //2. Fetch a booking by a review key
+
         //3. Store the review
     },
     computed: {
