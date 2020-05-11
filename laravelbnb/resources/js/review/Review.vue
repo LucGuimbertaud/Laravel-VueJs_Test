@@ -73,7 +73,7 @@
 </template>
 
 <script>
-import { is404 } from "./../shared/utils/response";
+import { is404, is422 } from "./../shared/utils/response";
 
 export default {
     data() {
@@ -86,7 +86,8 @@ export default {
             existingReview: null,
             loading: false,
             booking: null,
-            error: false
+            error: false,
+            errors: null
         };
     },
 
@@ -122,8 +123,6 @@ export default {
             .then(() => {
                 this.loading = false;
             });
-
-        //3. Store the review
     },
     computed: {
         alreadyReviewed() {
@@ -148,12 +147,25 @@ export default {
     },
 
     methods: {
+        //3. Store the reviews
         submit() {
+            this.errors = null;
             this.loading = true;
             axios
                 .post(`/api/reviews`, this.review)
                 .then(response => console.log(response))
-                .catch(err => (this.error = true))
+                .catch(err => {
+                    if(is422(err)){
+                        const errors = err.response.data.errors;
+
+                        if(errors["content"] && 1 === _.size(errors)) {
+                            this.erros = errors;
+                            return;
+                        }
+                    }
+
+                    this.error = true;
+                })
                 .then(() => (this.loading = false));
         }
     }

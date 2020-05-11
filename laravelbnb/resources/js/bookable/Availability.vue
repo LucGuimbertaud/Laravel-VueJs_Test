@@ -52,6 +52,8 @@
 
 
 <script>
+import { is422 } from "./../shared/utils/response";
+
 export default {
     props: {
         bookableId: null
@@ -78,7 +80,7 @@ export default {
                 this.status = response.status;
             })
             .catch(error =>{
-                if(422 === error.response.status){
+                if(is422(err)){
                     this.errors = error.response.data.errors;
                 }
                 this.status = error.response.status;
