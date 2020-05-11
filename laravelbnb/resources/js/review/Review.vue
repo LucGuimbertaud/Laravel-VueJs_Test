@@ -60,7 +60,11 @@
                                 v-model="review.content"
                             ></textarea>
                         </div>
-                        <button class="btn btn-lg btn-primary btn-block">
+                        <button
+                            class="btn btn-lg btn-primary btn-block"
+                            @click.prevent="submit"
+                            :disabled="loading"
+                        >
                             Submit
                         </button>
                     </div>
@@ -70,7 +74,6 @@
     </div>
 </template>
 
-
 <script>
 import { is404 } from "./../shared/utils/response";
 
@@ -78,6 +81,7 @@ export default {
     data() {
         return {
             review: {
+                id: null,
                 rating: 5,
                 content: null
             },
@@ -89,38 +93,37 @@ export default {
     },
 
     created() {
-        (this.loading = true),
-            //1. If review already exist
-            axios
-                .get(`/api/reviews/${this.$route.params.id}`)
-                .then(response => {
-                    this.existingReview = response.data.data;
-                })
-                .catch(err => {
-                    if (is404(err)) {
-                        //2. Fetch a booking by a review key
-                        return axios
-                            .get(
-                                `/api/booking-by-review/${this.$route.params.id}`
-                            )
-                            .then(response => {
-                                this.booking = response.data.data;
-                            })
-                            .catch(err => {
-                                this.error = !is404(err);
-                                // is404(err) ? {}: (this.error = true);
+        this.review.id = this.$route.params.id;
+        this.loading = true;
+        //1. If review already exist
+        axios
+            .get(`/api/reviews/${this.review.id}`)
+            .then(response => {
+                this.existingReview = response.data.data;
+            })
+            .catch(err => {
+                if (is404(err)) {
+                    //2. Fetch a booking by a review key
+                    return axios
+                        .get(`/api/booking-by-review/${this.review.id}`)
+                        .then(response => {
+                            this.booking = response.data.data;
+                        })
+                        .catch(err => {
+                            this.error = !is404(err);
+                            // is404(err) ? {}: (this.error = true);
 
-                                // if(!is404(err)){
-                                //     this.error =true
-                                // }
-                            });
-                    }
+                            // if(!is404(err)){
+                            //     this.error =true
+                            // }
+                        });
+                }
 
-                    this.error = true;
-                })
-                .then(() => {
-                    this.loading = false;
-                });
+                this.error = true;
+            })
+            .then(() => {
+                this.loading = false;
+            });
 
         //3. Store the review
     },
@@ -143,6 +146,17 @@ export default {
 
         twoColumns() {
             return this.loading || !this.alreadyReviewed;
+        }
+    },
+
+    methods: {
+        submit() {
+            this.loading = true;
+            axios
+                .post(`/api/reviews`, this.review)
+                .then(response => console.log(response))
+                .catch(err => (this.error = true))
+                .then(() => (this.loading = false));
         }
     }
 };
