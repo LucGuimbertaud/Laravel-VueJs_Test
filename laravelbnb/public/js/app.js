@@ -1909,6 +1909,15 @@ module.exports = {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _shared_utils_response__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./../shared/utils/response */ "./resources/js/shared/utils/response.js");
+/* harmony import */ var _shared_mixins_validationErrors__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./../shared/mixins/validationErrors */ "./resources/js/shared/mixins/validationErrors.js");
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -1952,7 +1961,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  mixins: [_shared_mixins_validationErrors__WEBPACK_IMPORTED_MODULE_1__["default"]],
   props: {
     bookableId: String
   },
@@ -1961,8 +1972,7 @@ __webpack_require__.r(__webpack_exports__);
       from: null,
       to: null,
       loading: false,
-      status: null,
-      errors: null
+      status: null
     };
   },
   methods: {
@@ -1982,9 +1992,6 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function () {
         return _this.loading = false;
       });
-    },
-    errorFor: function errorFor(field) {
-      return this.hasErrors && this.errors[field] ? this.errors[field] : null;
     }
   },
   computed: {
@@ -2240,6 +2247,7 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _shared_utils_response__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./../shared/utils/response */ "./resources/js/shared/utils/response.js");
+/* harmony import */ var _shared_mixins_validationErrors__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./../shared/mixins/validationErrors */ "./resources/js/shared/mixins/validationErrors.js");
 //
 //
 //
@@ -2320,7 +2328,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  mixins: [_shared_mixins_validationErrors__WEBPACK_IMPORTED_MODULE_1__["default"]],
   data: function data() {
     return {
       review: {
@@ -2402,9 +2412,6 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function () {
         return _this2.sending = false;
       });
-    },
-    errorFor: function errorFor(field) {
-      return null !== this.errors && this.errors[field] ? this.errors[field] : null;
     }
   }
 });
@@ -7040,7 +7047,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\nlabel[data-v-39d99139] {\n  font-size: 0.7rem;\n  text-transform: uppercase;\n  color: gray;\n  font-weight: bolder;\n}\n.is-invalid[data-v-39d99139] {\n  border-color: #b22222;\n  background-image: none;\n}\n.invalid-feedback[data-v-39d99139] {\n  color: #b22222;\n}\n", ""]);
+exports.push([module.i, "\nlabel[data-v-39d99139] {\n    font-size: 0.7rem;\n    text-transform: uppercase;\n    color: gray;\n    font-weight: bolder;\n}\n.is-invalid[data-v-39d99139] {\n    border-color: #b22222;\n    background-image: none;\n}\n.invalid-feedback[data-v-39d99139] {\n    color: #b22222;\n}\n", ""]);
 
 // exports
 
@@ -59801,7 +59808,7 @@ var render = function() {
       "h6",
       { staticClass: "text-uppercase text-secondary font-weight-bolder" },
       [
-        _vm._v("\n    Check Availability\n    "),
+        _vm._v("\n        Check Availability\n        "),
         _vm.noAvailability
           ? _c("span", { staticClass: "text-danger" }, [
               _vm._v("(NOT AVAILABLE)")
@@ -59909,7 +59916,7 @@ var render = function() {
         attrs: { disabled: _vm.loading },
         on: { click: _vm.check }
       },
-      [_vm._v("Check!")]
+      [_vm._v("\n        Check!\n    ")]
     )
   ])
 }
@@ -76412,6 +76419,30 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ValidationErrors_vue_vue_type_template_id_4356abde_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
+
+/***/ }),
+
+/***/ "./resources/js/shared/mixins/validationErrors.js":
+/*!********************************************************!*\
+  !*** ./resources/js/shared/mixins/validationErrors.js ***!
+  \********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      errors: null
+    };
+  },
+  methods: {
+    errorFor: function errorFor(field) {
+      return null !== this.errors && this.errors[field] ? this.errors[field] : null;
+    }
+  }
+});
 
 /***/ }),
 
