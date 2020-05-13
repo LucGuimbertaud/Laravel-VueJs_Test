@@ -16,9 +16,20 @@
         </div>
         <div class="col-md-4 pb-4">
             <availability
+                class="mb-4"
                 :bookable-id="this.$route.params.id"
                 v-on:availability="checkPrice($event)"
             ></availability>
+
+            <transition name="fade">
+                <price-breackdown v-if="price" :price="price" class="mb-4"></price-breackdown>
+            </transition>
+
+            <transition name="fade">
+                <button class="btn btn-outline-secondary btn-block" v-if="price">Book now</button>
+            </transition>
+
+
         </div>
     </div>
 </template>
@@ -27,11 +38,13 @@
 import { mapState } from 'vuex';
 import Availability from "./Availability";
 import ReviewList from "./ReviewList";
+import PriceBreackdown from "./PriceBreakdown"
 
 export default {
     components: {
         Availability,
-        ReviewList
+        ReviewList,
+        PriceBreackdown
     },
     data() {
         return {
