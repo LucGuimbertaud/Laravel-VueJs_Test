@@ -2,10 +2,14 @@
     <div>
         <h6 class="text-uppercase text-secondary font-weight-bolder">
             Check Availability
-            <span v-if="noAvailability" class="text-danger"
-                >(NOT AVAILABLE)</span
-            >
-            <span v-if="hasAvailability" class="text-success">(AVAILABLE)</span>
+            <transition name="fade">
+                <span v-if="noAvailability" class="text-danger"
+                    >(NOT AVAILABLE)</span
+                >
+                <span v-if="hasAvailability" class="text-success"
+                    >(AVAILABLE)</span
+                >
+            </transition>
         </h6>
 
         <div class="form-row">
@@ -52,7 +56,6 @@
 import { is422 } from "./../shared/utils/response";
 import validationErrors from "./../shared/mixins/validationErrors";
 
-
 export default {
     mixins: [validationErrors],
 
@@ -64,7 +67,7 @@ export default {
             from: this.$store.state.lastSearch.from,
             to: this.$store.state.lastSearch.to,
             loading: false,
-            status: null,
+            status: null
         };
     },
     methods: {
@@ -72,9 +75,9 @@ export default {
             this.loading = true;
             this.errors = null;
 
-            this.$store.dispatch('setLastSearch', {
+            this.$store.dispatch("setLastSearch", {
                 from: this.from,
-                to: this.to,
+                to: this.to
             });
 
             axios
@@ -91,7 +94,7 @@ export default {
                     this.status = error.response.status;
                 })
                 .then(() => (this.loading = false));
-        },
+        }
     },
     computed: {
         hasErrors() {
