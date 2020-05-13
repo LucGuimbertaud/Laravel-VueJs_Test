@@ -41,13 +41,13 @@
                 <v-errors :errors="errorFor('to')"></v-errors>
             </div>
         </div>
-
         <button
             class="btn btn-secondary btn-block"
             @click="check"
             :disabled="loading"
         >
-            Check!
+           <span v-if="!loading">Check!</span>
+           <span v-if="loading"><i class="fas fa-circle-notch fa-spin"></i>Checking ...</span>
         </button>
     </div>
 </template>
@@ -94,7 +94,7 @@ export default {
                     this.status = error.response.status;
                 })
                 .then(() => (this.loading = false));
-        }
+       }
     },
     computed: {
         hasErrors() {
