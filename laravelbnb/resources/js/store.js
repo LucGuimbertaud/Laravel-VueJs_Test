@@ -10,5 +10,11 @@ export default {
             state.lastSearch = payload;
         }
     },
+    actions: {
+        setLastSearch(context, payload) {
+            context.commit('setLastSearch', payload);
+            localStorage.setItem('lastSearch', JSON.stringify(payload));
+        }
+    }
 
 };
