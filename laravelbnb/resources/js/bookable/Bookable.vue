@@ -22,23 +22,43 @@
             ></availability>
 
             <transition name="fade">
-                <price-breackdown v-if="price" :price="price" class="mb-4"></price-breackdown>
+                <price-breackdown
+                    v-if="price"
+                    :price="price"
+                    class="mb-4"
+                ></price-breackdown>
             </transition>
 
             <transition name="fade">
-                <button class="btn btn-outline-secondary btn-block" v-if="price" @click="addToBasket">Book now</button>
+                <button
+                    class="btn btn-outline-secondary btn-block"
+                    v-if="price"
+                    @click="addToBasket"
+                    :disabled="inBasketAlready"
+                >
+                    Book now
+                </button>
             </transition>
 
+             <button
+                    class="btn btn-outline-secondary btn-block"
+                    v-if="inBasketAlready"
+                    @click="removeFromBasket"
+                >
+                    Remove from basket
+                </button>
 
+
+            <div v-if="inBasketAlready" class="mt-4 text-muted warning">Seems like you've added to cart already</div>
         </div>
     </div>
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState } from "vuex";
 import Availability from "./Availability";
 import ReviewList from "./ReviewList";
-import PriceBreackdown from "./PriceBreakdown"
+import PriceBreackdown from "./PriceBreakdown";
 
 export default {
     components: {
@@ -61,9 +81,20 @@ export default {
         });
     },
 
-    computed: mapState({
-        lastSearch: "lastSearch"
+    computed:  {
+        ...mapState({
+        lastSearch: "lastSearch",
     }),
+    inBasketAlready(){
+        if (null === this.bookable) {
+                return false;
+        }
+
+        return this.$store.getters.inBasketAlready(this.bookable.id)
+    }
+    },
+
+
 
     methods: {
         async checkPrice(hasAvailability) {
@@ -88,7 +119,21 @@ export default {
                 price: this.price,
                 dates: this.lastSearch
             });
+        },
+        removeFromBasket() {
+            this.$store.commit("removeFromBasket", this.bookable.id)
         }
     }
 };
 </script>
+
+
+
+
+<style scoped>
+
+.warning{
+    font-size: 0.7rem;
+}
+
+</style>
