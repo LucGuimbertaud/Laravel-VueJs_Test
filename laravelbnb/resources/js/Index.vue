@@ -9,7 +9,7 @@
 
             <router-link
                 class="btn nav-button"
-                :to="{ name: 'home' }"
+                :to="{ name: 'basket' }"
             >
             Basket
             <span v-if="itemsInBasket" class="badge badge-secondary">{{ itemsInBasket }}</span>
