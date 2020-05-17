@@ -40,16 +40,17 @@
                 </button>
             </transition>
 
-             <button
-                    class="btn btn-outline-secondary btn-block"
-                    v-if="inBasketAlready"
-                    @click="removeFromBasket"
-                >
-                    Remove from basket
-                </button>
+            <button
+                class="btn btn-outline-secondary btn-block"
+                v-if="inBasketAlready"
+                @click="removeFromBasket"
+            >
+                Remove from basket
+            </button>
 
-
-            <div v-if="inBasketAlready" class="mt-4 text-muted warning">Seems like you've added to cart already</div>
+            <div v-if="inBasketAlready" class="mt-4 text-muted warning">
+                Seems like you've added to cart already
+            </div>
         </div>
     </div>
 </template>
@@ -81,20 +82,18 @@ export default {
         });
     },
 
-    computed:  {
+    computed: {
         ...mapState({
-        lastSearch: "lastSearch",
-    }),
-    inBasketAlready(){
-        if (null === this.bookable) {
+            lastSearch: "lastSearch"
+        }),
+        inBasketAlready() {
+            if (null === this.bookable) {
                 return false;
+            }
+
+            return this.$store.getters.inBasketAlready(this.bookable.id);
         }
-
-        return this.$store.getters.inBasketAlready(this.bookable.id)
-    }
     },
-
-
 
     methods: {
         async checkPrice(hasAvailability) {
@@ -114,26 +113,21 @@ export default {
             }
         },
         addToBasket() {
-            this.$store.commit("addToBasket", {
+            this.$store.dispatch("addToBasket", {
                 bookable: this.bookable,
                 price: this.price,
                 dates: this.lastSearch
             });
         },
         removeFromBasket() {
-            this.$store.commit("removeFromBasket", this.bookable.id)
+            this.$store.dispatch("removeFromBasket", this.bookable.id);
         }
     }
 };
 </script>
 
-
-
-
 <style scoped>
-
-.warning{
+.warning {
     font-size: 0.7rem;
 }
-
 </style>

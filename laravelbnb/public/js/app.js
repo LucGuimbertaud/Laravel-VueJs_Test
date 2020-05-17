@@ -2212,6 +2212,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 
 
@@ -2290,14 +2291,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }))();
     },
     addToBasket: function addToBasket() {
-      this.$store.commit("addToBasket", {
+      this.$store.dispatch("addToBasket", {
         bookable: this.bookable,
         price: this.price,
         dates: this.lastSearch
       });
     },
     removeFromBasket: function removeFromBasket() {
-      this.$store.commit("removeFromBasket", this.bookable.id);
+      this.$store.dispatch("removeFromBasket", this.bookable.id);
     }
   }
 });
@@ -7385,7 +7386,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.warning[data-v-0d2ee2be]{\n    font-size: 0.7rem;\n}\n\n", ""]);
+exports.push([module.i, "\n.warning[data-v-0d2ee2be] {\n    font-size: 0.7rem;\n}\n", ""]);
 
 // exports
 
@@ -61144,13 +61145,15 @@ var render = function() {
                 staticClass: "btn btn-outline-secondary btn-block",
                 on: { click: _vm.removeFromBasket }
               },
-              [_vm._v("\n                Remove from basket\n            ")]
+              [_vm._v("\n            Remove from basket\n        ")]
             )
           : _vm._e(),
         _vm._v(" "),
         _vm.inBasketAlready
           ? _c("div", { staticClass: "mt-4 text-muted warning" }, [
-              _vm._v("Seems like you've added to cart already")
+              _vm._v(
+                "\n            Seems like you've added to cart already\n        "
+              )
             ])
           : _vm._e()
       ],
@@ -79069,6 +79072,9 @@ __webpack_require__.r(__webpack_exports__);
       state.basket.items = state.basket.items.filter(function (item) {
         return item.bookable.id !== payload;
       });
+    },
+    setBasket: function setBasket(state, payload) {
+      state.basket = payload;
     }
   },
   actions: {
@@ -79082,6 +79088,24 @@ __webpack_require__.r(__webpack_exports__);
       if (lastSearch) {
         context.commit('setLastSearch', JSON.parse(lastSearch));
       }
+
+      var basket = localStorage.getItem('basket');
+
+      if (basket) {
+        context.commit('setBasket', JSON.parse(basket));
+      }
+    },
+    addToBasket: function addToBasket(_ref, payload) {
+      var commit = _ref.commit,
+          state = _ref.state;
+      commit('addToBasket', payload);
+      localStorage.setItem('basket', JSON.stringify(state.basket));
+    },
+    removeFromBasket: function removeFromBasket(_ref2, payload) {
+      var commit = _ref2.commit,
+          state = _ref2.state;
+      commit('removeFromBasket', payload);
+      localStorage.setItem('basket', JSON.stringify(state.basket));
     }
   },
   getters: {
