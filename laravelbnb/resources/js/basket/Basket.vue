@@ -12,6 +12,10 @@
                         <span v-else>Empty</span>
                     </h6>
                 </div>
+
+                <div v-for="item in basket" :key="item.bookable.id">
+
+                </div>
             </div>
         </div>
     </div>

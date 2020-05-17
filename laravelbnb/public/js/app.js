@@ -2008,6 +2008,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   computed: _objectSpread(_objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(["itemsInBasket"])), Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])({
@@ -61022,21 +61026,32 @@ var render = function() {
         _vm._v("\n            Checkout form\n        ")
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "col-md-4" }, [
-        _c("div", { staticClass: "d-flex justify-content-between" }, [
-          _c(
-            "h6",
-            { staticClass: "text-uppercase text-secondary font-weight-bolder" },
-            [_vm._v("Your cart")]
-          ),
+      _c(
+        "div",
+        { staticClass: "col-md-4" },
+        [
+          _c("div", { staticClass: "d-flex justify-content-between" }, [
+            _c(
+              "h6",
+              {
+                staticClass: "text-uppercase text-secondary font-weight-bolder"
+              },
+              [_vm._v("Your cart")]
+            ),
+            _vm._v(" "),
+            _c("h6", { staticClass: "badge badge-secondary text-uppercase" }, [
+              _vm.itemsInBasket
+                ? _c("span", [_vm._v("Item " + _vm._s(_vm.itemsInBasket))])
+                : _c("span", [_vm._v("Empty")])
+            ])
+          ]),
           _vm._v(" "),
-          _c("h6", { staticClass: "badge badge-secondary text-uppercase" }, [
-            _vm.itemsInBasket
-              ? _c("span", [_vm._v("Item " + _vm._s(_vm.itemsInBasket))])
-              : _c("span", [_vm._v("Empty")])
-          ])
-        ])
-      ])
+          _vm._l(_vm.basket, function(item) {
+            return _c("div", { key: item.bookable.id })
+          })
+        ],
+        2
+      )
     ])
   ])
 }
