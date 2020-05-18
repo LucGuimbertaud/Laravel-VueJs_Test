@@ -61540,7 +61540,7 @@ var render = function() {
               [
                 _c("div", { staticClass: "row pt-4" }, [
                   _c("div", { staticClass: "col-md-6" }, [
-                    _vm._v("Piotr Jura")
+                    _vm._v("Luc Guimbertaud")
                   ]),
                   _vm._v(" "),
                   _c(
