@@ -32,10 +32,12 @@
                     <div class="col-md-6">
                         <label for="country">Country</label>
                         <input type="text" class="form-control" name="country">
-                    </div><div class="col-md-4">
+                    </div>
+                    <div class="col-md-4">
                         <label for="state">State</label>
                         <input type="text" class="form-control" name="state">
-                    </div><div class="col-md-2">
+                    </div>
+                    <div class="col-md-2">
                         <label for="zip">Zip</label>
                         <input type="text" class="form-control" name="zip">
                     </div>
