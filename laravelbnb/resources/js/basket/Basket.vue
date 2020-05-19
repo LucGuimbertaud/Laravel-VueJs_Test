@@ -2,7 +2,50 @@
     <div>
         <div class="row">
             <div class="col-md-8">
-                Checkout form
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="first_names">First names</label>
+                        <input type="text" class="form-control" name="first_names">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="last_names">Last names</label>
+                        <input type="text" class="form-control" name="last_names">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label for="email">Email</label>
+                        <input type="text" class="form-control" name="email">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="street">Street</label>
+                        <input type="text" class="form-control" name="street">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="city">City</label>
+                        <input type="text" class="form-control" name="city">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="country">Country</label>
+                        <input type="text" class="form-control" name="country">
+                    </div><div class="col-md-4">
+                        <label for="state">State</label>
+                        <input type="text" class="form-control" name="state">
+                    </div><div class="col-md-2">
+                        <label for="zip">Zip</label>
+                        <input type="text" class="form-control" name="zip">
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-md-12 form-group">
+                        <button type="submit" class="btn btn-lg btn-primary btn-block">Book Now !</button>
+                    </div>
+                </div>
             </div>
             <div class="col-md-4">
                 <div class="d-flex justify-content-between">
