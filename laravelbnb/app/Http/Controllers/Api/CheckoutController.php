@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Booking;
 use App\Bookabke;
+use App\Address;
 
 class CheckoutController extends Controller
 {
@@ -42,6 +44,24 @@ class CheckoutController extends Controller
             }],
         ]));
 
-        dd($data);
+        $bookingData = $data['bookings'];
+        $addressData = $data['customers'];
+
+        $bookings = collect($bookingData)->map(function($bookingData) use ($addressData){
+
+            $booking = new Booking();
+            $booking->from = $bookingData['from'];
+            $booking->to = $bookingData['to'];
+            $booking->price = 200;
+            $booking->bookable_id = $bookingData['bookable_id'];
+
+            $booking->address()->associate(Address::create($addressData));
+
+            $booking->save();
+
+            return $booking;
+        });
+
+        return $bookings;
     }
 }
