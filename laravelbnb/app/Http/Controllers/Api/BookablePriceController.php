@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api;
 use App\Bookable;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
 
 class BookablePriceController extends Controller
 {
@@ -25,16 +24,8 @@ class BookablePriceController extends Controller
         ]);
 
 
-        $days = (new Carbon($data['from']))->diffInDays( new Carbon($data['to'])) + 1;
-        $price = $days * $bookable->price;
-
         return response()->json([
-            'data' => [
-                'total' => $price,
-                'breakdown' => [
-                    $bookable->price => $days
-                ]
-            ]
+            'data' => $bookable->priceFor($data['from'], $data['to'])
         ]);
     }
 }
