@@ -10,7 +10,17 @@
                             class="form-control"
                             name="first_names"
                             v-model="customer.first_names"
+                            :class="[
+                                {
+                                    'is-invalid': errorFor(
+                                        'customer.first_names'
+                                    )
+                                }
+                            ]"
                         />
+                        <v-errors
+                            :errors="errorFor('customer.first_names')"
+                        ></v-errors>
                     </div>
                     <div class="col-md-6">
                         <label for="last_names">Last names</label>
@@ -19,7 +29,17 @@
                             class="form-control"
                             name="last_names"
                             v-model="customer.last_names"
+                            :class="[
+                                {
+                                    'is-invalid': errorFor(
+                                        'customer.last_names'
+                                    )
+                                }
+                            ]"
                         />
+                        <v-errors
+                            :errors="errorFor('customer.last_names')"
+                        ></v-errors>
                     </div>
                 </div>
                 <div class="row">
@@ -30,7 +50,13 @@
                             class="form-control"
                             name="email"
                             v-model="customer.email"
+                            :class="[
+                                { 'is-invalid': errorFor('customer.email') }
+                            ]"
                         />
+                        <v-errors
+                            :errors="errorFor('customer.email')"
+                        ></v-errors>
                     </div>
                 </div>
                 <div class="row">
@@ -41,7 +67,13 @@
                             class="form-control"
                             name="street"
                             v-model="customer.street"
+                            :class="[
+                                { 'is-invalid': errorFor('customer.street') }
+                            ]"
                         />
+                        <v-errors
+                            :errors="errorFor('customer.street')"
+                        ></v-errors>
                     </div>
                     <div class="col-md-6">
                         <label for="city">City</label>
@@ -50,7 +82,13 @@
                             class="form-control"
                             name="city"
                             v-model="customer.city"
+                            :class="[
+                                { 'is-invalid': errorFor('customer.city') }
+                            ]"
                         />
+                        <v-errors
+                            :errors="errorFor('customer.city')"
+                        ></v-errors>
                     </div>
                 </div>
                 <div class="row">
@@ -61,7 +99,13 @@
                             class="form-control"
                             name="country"
                             v-model="customer.country"
+                            :class="[
+                                { 'is-invalid': errorFor('customer.country') }
+                            ]"
                         />
+                        <v-errors
+                            :errors="errorFor('customer.country')"
+                        ></v-errors>
                     </div>
                     <div class="col-md-4">
                         <label for="state">State</label>
@@ -70,7 +114,13 @@
                             class="form-control"
                             name="state"
                             v-model="customer.state"
+                            :class="[
+                                { 'is-invalid': errorFor('customer.state') }
+                            ]"
                         />
+                        <v-errors
+                            :errors="errorFor('customer.state')"
+                        ></v-errors>
                     </div>
                     <div class="col-md-2">
                         <label for="zip">Zip</label>
@@ -79,7 +129,11 @@
                             class="form-control"
                             name="zip"
                             v-model="customer.zip"
+                            :class="[
+                                { 'is-invalid': errorFor('customer.zip') }
+                            ]"
                         />
+                        <v-errors :errors="errorFor('customer.zip')"></v-errors>
                     </div>
                 </div>
                 <hr />
@@ -89,6 +143,7 @@
                             type="submit"
                             class="btn btn-lg btn-primary btn-block"
                             @click.prevent="book"
+                            :disabled="loading"
                         >
                             Book Now !
                         </button>
@@ -170,7 +225,7 @@ export default {
     mixins: [validationErrors],
     data() {
         return {
-            lading: false,
+            loading: false,
             customer: {
                 first_names: null,
                 last_names: null,
@@ -192,8 +247,9 @@ export default {
     methods: {
         async book() {
             this.loading = true;
+            this.errors = null;
 
-            try{
+            try {
                 await axios.post(`/api/checkout`, {
                     customer: this.customer,
                     bookings: this.basket.map(basketItem => ({
@@ -203,8 +259,8 @@ export default {
                     }))
                 });
                 this.$store.dispatch("clearBasket");
-            }catch (err){
-
+            } catch (errors) {
+                this.errors = errors.response && errors.response.data.errors;
             }
 
             this.loading = false;
