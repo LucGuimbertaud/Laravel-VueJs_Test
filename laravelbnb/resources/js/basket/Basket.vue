@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-8" v-if="itemsInBasket">
                 <div class="row">
                     <div class="col-md-6">
                         <label for="first_names">First names</label>
@@ -93,6 +93,11 @@
                             Book Now !
                         </button>
                     </div>
+                </div>
+            </div>
+            <div class="col-md-8" v-else>
+                <div class="jumbotron jumbotron-fluid text-center">
+                    <h1>Empty</h1>
                 </div>
             </div>
             <div class="col-md-4">
