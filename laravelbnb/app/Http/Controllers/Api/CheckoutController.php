@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Booking;
-use App\Bookabke;
+use App\Bookable;
 use App\Address;
 
 class CheckoutController extends Controller
@@ -20,12 +20,12 @@ class CheckoutController extends Controller
     {
         $data = $request->validate([
             'bookings' => 'required|array|min:1',
-            'bookings.*.bookable_id' => 'required|exists:bookable,id',
-            'booking.*.from' => 'required|after_or_equal:today',
-            'booking.*.to' => 'required|after_or_equal:bookings.*.from',
+            'bookings.*.bookable_id' => 'required|exists:bookables,id',
+            'bookings.*.from' => 'required|after_or_equal:today',
+            'bookings.*.to' => 'required|after_or_equal:bookings.*.from',
             'customer.first_names' => 'required|min:2',
             'customer.last_names' => 'required|min:2',
-            'customer.sreet' => 'required|min:3',
+            'customer.street' => 'required|min:3',
             'customer.city' => 'required|min:2',
             'customer.email' => 'required|email',
             'customer.country' => 'required|min:2',
@@ -45,7 +45,7 @@ class CheckoutController extends Controller
         ]));
 
         $bookingData = $data['bookings'];
-        $addressData = $data['customers'];
+        $addressData = $data['customer'];
 
         $bookings = collect($bookingData)->map(function($bookingData) use ($addressData){
             $bookable = Bookable::findOrFail($bookingData['bookable_id']);

@@ -5,47 +5,93 @@
                 <div class="row">
                     <div class="col-md-6">
                         <label for="first_names">First names</label>
-                        <input type="text" class="form-control" name="first_names" v-model="customer.first_names">
+                        <input
+                            type="text"
+                            class="form-control"
+                            name="first_names"
+                            v-model="customer.first_names"
+                        />
                     </div>
                     <div class="col-md-6">
                         <label for="last_names">Last names</label>
-                        <input type="text" class="form-control" name="last_names" v-model="customer.last_name">
+                        <input
+                            type="text"
+                            class="form-control"
+                            name="last_names"
+                            v-model="customer.last_names"
+                        />
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12">
                         <label for="email">Email</label>
-                        <input type="text" class="form-control" name="email" v-model="customer.email">
+                        <input
+                            type="text"
+                            class="form-control"
+                            name="email"
+                            v-model="customer.email"
+                        />
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6">
                         <label for="street">Street</label>
-                        <input type="text" class="form-control" name="street" v-model="customer.street">
+                        <input
+                            type="text"
+                            class="form-control"
+                            name="street"
+                            v-model="customer.street"
+                        />
                     </div>
                     <div class="col-md-6">
                         <label for="city">City</label>
-                        <input type="text" class="form-control" name="city" v-model="customer.city">
+                        <input
+                            type="text"
+                            class="form-control"
+                            name="city"
+                            v-model="customer.city"
+                        />
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6">
                         <label for="country">Country</label>
-                        <input type="text" class="form-control" name="country" v-model="customer.country">
+                        <input
+                            type="text"
+                            class="form-control"
+                            name="country"
+                            v-model="customer.country"
+                        />
                     </div>
                     <div class="col-md-4">
                         <label for="state">State</label>
-                        <input type="text" class="form-control" name="state" v-model="customer.state">
+                        <input
+                            type="text"
+                            class="form-control"
+                            name="state"
+                            v-model="customer.state"
+                        />
                     </div>
                     <div class="col-md-2">
                         <label for="zip">Zip</label>
-                        <input type="text" class="form-control" name="zip" v-model="customer.zip">
+                        <input
+                            type="text"
+                            class="form-control"
+                            name="zip"
+                            v-model="customer.zip"
+                        />
                     </div>
                 </div>
-                <hr>
+                <hr />
                 <div class="row">
                     <div class="col-md-12 form-group">
-                        <button type="submit" class="btn btn-lg btn-primary btn-block">Book Now !</button>
+                        <button
+                            type="submit"
+                            class="btn btn-lg btn-primary btn-block"
+                            @click.prevent="book"
+                        >
+                            Book Now !
+                        </button>
                     </div>
                 </div>
             </div>
@@ -113,27 +159,50 @@
 
 <script>
 import { mapGetters, mapState } from "vuex";
+import validationErrors from "./../shared/mixins/validationErrors";
 
 export default {
+    mixins: [validationErrors],
     data() {
         return {
+            lading: false,
             customer: {
                 first_names: null,
-                last_name: null,
+                last_names: null,
                 email: null,
                 street: null,
                 city: null,
                 country: null,
                 state: null,
-                zip: null,
+                zip: null
             }
-        }
+        };
     },
     computed: {
         ...mapGetters(["itemsInBasket"]),
         ...mapState({
             basket: state => state.basket.items
         })
+    },
+    methods: {
+        async book() {
+            this.loading = true;
+
+            try{
+                await axios.post(`/api/checkout`, {
+                    customer: this.customer,
+                    bookings: this.basket.map(basketItem => ({
+                        bookable_id: basketItem.bookable.id,
+                        from: basketItem.dates.from,
+                        to: basketItem.dates.to
+                    }))
+                })
+            }catch (err){
+
+            }
+
+            this.loading = false;
+        }
     }
 };
 </script>
