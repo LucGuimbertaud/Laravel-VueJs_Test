@@ -2,7 +2,7 @@ require("./bootstrap");
 
 import moment from "moment";
 import VueRouter from "vue-router";
-import Vuex from 'vuex';
+import Vuex from "vuex";
 import Index from "./Index";
 import router from "./routes";
 import FatalError from "./shared/components/FatalError";
@@ -33,13 +33,5 @@ const app = new Vue({
     },
     async beforeCreate() {
         this.$store.dispatch("loadStoredState");
-
-        // await axios.get('/sanctum/csrf-cookie');
-        // await axios.post("/login", {
-        //     email: 'igerlach@example.com',
-        //     password: 'password'
-        // });
-
-        // await axios.get('/user');
-    },
+    }
 });
