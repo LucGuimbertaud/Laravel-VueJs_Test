@@ -74,7 +74,7 @@ export default {
                 }
             }
         },
-        logout({commit}) {
+        logout({ commit }) {
             commit("setUser", {});
             commit("setLoggedIn", false);
             logOut();

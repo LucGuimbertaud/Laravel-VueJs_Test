@@ -1,13 +1,13 @@
 require("./bootstrap");
 
+import Vuex from "vuex"
 import moment from "moment";
 import VueRouter from "vue-router";
-import Vuex from "vuex";
 import Index from "./Index";
 import router from "./routes";
 import FatalError from "./shared/components/FatalError";
+import Success from "./shared/components//Success";
 import StarRating from "./shared/components/StarRating";
-import Success from "./shared/components/Success";
 import ValidationErrors from "./shared/components/ValidationErrors";
 import storeDefinition from "./store";
 
@@ -19,23 +19,10 @@ Vue.filter("fromNow", value => moment(value).fromNow());
 
 Vue.component("star-rating", StarRating);
 Vue.component("fatal-error", FatalError);
-Vue.component("success", Success);
 Vue.component("v-errors", ValidationErrors);
+Vue.component("success", Success);
 
 const store = new Vuex.Store(storeDefinition);
-
-window.axios.interceptors.response.use(
-    response => {
-        return response;
-    },
-    error => {
-        if (401 === error.response.status) {
-            store.dispatch("logout");
-        }
-
-        return Promise.reject(error);
-    }
-);
 
 const app = new Vue({
     el: "#app",
@@ -44,8 +31,7 @@ const app = new Vue({
     components: {
         index: Index
     },
-    async beforeCreate() {
+    beforeCreate() {
         this.$store.dispatch("loadStoredState");
-        this.$store.dispatch("loadUser");
     }
 });
