@@ -1,35 +1,35 @@
 import VueRouter from "vue-router";
-import Bookables from "./bookables/Bookables"
-import Bookable from "./bookable/Bookable"
-import Basket from "./basket/Basket"
-import Review from "./review/Review"
+import Basket from "./basket/Basket";
+import Bookable from "./bookable/Bookable";
+import Bookables from "./bookables/Bookables";
+import Review from "./review/Review";
 
 const routes = [
     {
         path: "/",
         component: Bookables,
-        name: "home",
+        name: "home"
     },
     {
         path: "/bookable/:id",
         component: Bookable,
-        name: "bookable",
+        name: "bookable"
     },
     {
         path: "/review/:id",
         component: Review,
-        name: "review",
+        name: "review"
     },
     {
         path: "/basket",
         component: Basket,
-        name: 'basket',
+        name: "basket"
     }
 ];
 
 const router = new VueRouter({
-    routes, //Short for 'routes: routes'
-    mode: "history",
-})
+    routes, // short for `routes: routes`
+    mode: "history"
+});
 
 export default router;

@@ -8,7 +8,6 @@ use App\Bookable;
 use App\Http\Resources\BookableIndexResource;
 use App\Http\Resources\BookableShowResource;
 
-
 class BookableController extends Controller
 {
     public function index()

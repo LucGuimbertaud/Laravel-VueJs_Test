@@ -4,6 +4,7 @@
 
 use App\Review;
 use Faker\Generator as Faker;
+use Illuminate\Support\Str;
 
 $factory->define(Review::class, function (Faker $faker) {
     return [

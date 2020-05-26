@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Auth;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends Controller
@@ -27,7 +26,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    protected $redirectTo = '/home';
 
     /**
      * Create a new controller instance.
@@ -41,8 +40,8 @@ class LoginController extends Controller
 
     protected function authenticated(Request $request, $user)
     {
-        if($request->isXmlHttpRequest()){
-            return response(nul, 204);
+        if ($request->isXmlHttpRequest()) {
+            return response(null, 204);
         }
     }
 }

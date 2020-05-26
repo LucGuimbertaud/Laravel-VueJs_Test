@@ -14,7 +14,7 @@ class CreateBookablesTable extends Migration
     public function up()
     {
         Schema::create('bookables', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->timestamps();
 
             $table->string('title');

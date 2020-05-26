@@ -10,7 +10,6 @@ class Booking extends Model
 {
     protected $fillable = ['from', 'to'];
 
-
     public function bookable()
     {
         return $this->belongsTo(Bookable::class);
@@ -41,7 +40,7 @@ class Booking extends Model
     {
         parent::boot();
 
-        static::creating(function ($booking){
+        static::creating(function ($booking) {
             $booking->review_key = Str::uuid();
         });
     }

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Booking;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ReviewResource;
 use App\Review;
-use App\Booking;
 use Illuminate\Http\Request;
 
 class ReviewController extends Controller
@@ -25,7 +25,7 @@ class ReviewController extends Controller
 
         $booking = Booking::findByReviewKey($data['id']);
 
-        if(null === $booking){
+        if (null === $booking) {
             return abort(404);
         }
 
